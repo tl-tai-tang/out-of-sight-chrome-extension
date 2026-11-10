@@ -16,14 +16,15 @@ Out of Sight isn't on the Chrome Web Store; load it as an unpacked extension. Wo
 2. Turn on **Developer mode** (toggle, top-right).
 3. Click **Load unpacked**.
 4. Select the `out-of-sight-chrome-plugin` folder (the one containing `manifest.json`).
-
-### 3. Add users to hide
-
-1. Click the Out of Sight toolbar icon (or **Details → Extension options** in `chrome://extensions`).
-2. Enter one GitHub username or display name per line, e.g. `octocat` or `some-app[bot]`.
-3. Click **Save**. Open GitHub tabs update immediately.
+5. Click Extension Icon and hide user
 
 The list syncs to other devices signed into the same Chrome profile (`chrome.storage.sync`).
+
+## Limitations
+
+- Relies on GitHub's page markup, so a GitHub UI change may require selector updates in `content.js`.
+- Display names only match where GitHub renders them; most views show the login, so prefer usernames.
+- This does not work on the new Github experimental PR Overview page
 
 ## Screenshots
 
@@ -39,8 +40,3 @@ Add one username or display name per line, then click **Save**.
 
 ![Settings page](docs/screenshots/settings-page.png)
 
-## Limitations
-
-- Relies on GitHub's page markup, so a GitHub UI change may require selector updates in `content.js`.
-- Display names only match where GitHub renders them; most views show the login, so prefer usernames.
-- This does not work on the new Github experimental PR Overview page
