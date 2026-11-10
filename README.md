@@ -6,6 +6,8 @@
 
 <p align="center">A Chrome extension that hides GitHub comments and reviews from users you choose — noisy bots, chatty reviewers, anyone.</p>
 
+<p align="center">Works on both the classic pull request page and GitHub's new pull request overview page.</p>
+
 
 ## Installation
 
@@ -24,7 +26,6 @@ The list syncs to other devices signed into the same Chrome profile (`chrome.sto
 
 - Relies on GitHub's page markup, so a GitHub UI change may require selector updates in `content.js`.
 - Display names only match where GitHub renders them; most views show the login, so prefer usernames.
-- This does not work on the new Github experimental PR Overview page
 
 ## Screenshots
 

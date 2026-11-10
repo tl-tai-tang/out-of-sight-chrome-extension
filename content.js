@@ -21,13 +21,15 @@
   // One whole comment (avatar + box), tried in order. Inline review comments
   // first, then the outer timeline wrapper so the avatar is hidden too.
   const UNIT_SELECTORS = [
+    // Classic PR page
     '.review-comment',
     '.js-comment-container',
     '.timeline-comment-group',
     '.timeline-comment',
-    '[data-testid="review-thread-comment"]',
-    '[data-testid="comment-viewer-outer-box"]',
-    '[data-testid*="comment-container" i]',
+    // New React PR overview: review-thread comment, then the comment/review
+    // <article> (issuecomment-N / pullrequestreview-N / PR description).
+    '[id^="discussion_r"]',
+    'article',
   ];
   const COMMENT_SELECTOR = UNIT_SELECTORS.join(',');
 
@@ -39,6 +41,7 @@
     '.inline-comments',
     '[data-testid="review-thread"]',
     '.js-timeline-item',
+    '[data-testid="timeline-item"]',
   ].join(',');
 
   // "@Name[bot]" -> "name": case-insensitive, ignores leading @ and [bot] suffix.
