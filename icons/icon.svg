@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#24292f"/>
+  <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- sitting cat: ears, head, body -->
+    <path d="M44 42 L42 16 L57 29 Q64 27 71 29 L86 16 L84 42
+             Q90 54 79 61 Q92 72 94 90 Q96 110 84 110 L44 110
+             Q32 110 34 90 Q36 72 49 61 Q38 54 44 42 Z"/>
+    <!-- tail -->
+    <path d="M92 106 Q112 104 110 86 Q108 74 100 76"/>
+  </g>
+  <!-- blindfold -->
+  <path d="M36 38 Q64 32 92 38 L92 48 Q64 42 36 48 Z" fill="#d1242f"/>
+  <path d="M90 42 L102 54 L95 57 Z" fill="#d1242f"/>
+</svg>
