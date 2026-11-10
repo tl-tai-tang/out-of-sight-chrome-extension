@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Out of Sight",
+  "version": "1.0.0",
+  "description": "Hide GitHub comments and reviews from users you choose.",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Out of Sight settings"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
