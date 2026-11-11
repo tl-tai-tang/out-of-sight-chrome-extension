@@ -8,6 +8,8 @@
 
 <p align="center">Works on both the classic pull request page and GitHub's new pull request overview page.</p>
 
+---
+
 ### Changelog
 
 <details open>
@@ -27,8 +29,6 @@
 - Initial release: hide GitHub comments and reviews from a list of users.
 
 </details>
-
----
 
 ## Installation
 
