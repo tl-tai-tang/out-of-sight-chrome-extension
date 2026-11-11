@@ -11,17 +11,14 @@
 ### Changelog
 
 <details open>
-<summary><sub><b>2026-11-11</b> — Time window per user</sub></summary>
-<sub>
+<summary><b>2026-11-11</b> — Time window per user</summary>
 
 - Add a duration after a name (e.g. `my-bot 15m`): newer comments stay visible, older ones hide automatically.
 
-</sub>
 </details>
 
 <details>
-<summary><sub><b>2026-11-10</b> — Initial release, badge, new PR overview</sub></summary>
-<sub>
+<summary><b>2026-11-10</b> — Initial release, badge, new PR overview</summary>
 
 - Support GitHub's new pull request overview page.
 - Hidden-count badge: click to show (outlined) or hide hidden comments.
@@ -29,8 +26,9 @@
 - Logo and README.
 - Initial release: hide GitHub comments and reviews from a list of users.
 
-</sub>
 </details>
+
+---
 
 ## Installation
 
