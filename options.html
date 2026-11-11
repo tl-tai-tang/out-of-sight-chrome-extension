@@ -15,7 +15,8 @@
 <body>
   <h1>Out of Sight</h1>
   <p class="hint">GitHub usernames or display names to hide, one per line. Matching is case-insensitive; a leading <code>@</code> is ignored. Their comments and reviews disappear on github.com.</p>
-  <textarea id="users" spellcheck="false" placeholder="octocat&#10;some-bot[bot]&#10;Jane Doe"></textarea>
+  <p class="hint">Optionally add a time window after a name to keep their recent comments visible, e.g. <code>my-bot 15m</code> shows comments from the last 15 minutes and hides older ones. Units: <code>m</code> minutes, <code>h</code> hours, <code>d</code> days.</p>
+  <textarea id="users" spellcheck="false" placeholder="octocat&#10;some-bot[bot] 15m&#10;Jane Doe 2h"></textarea>
   <div>
     <button id="save">Save</button><span id="status"></span>
   </div>

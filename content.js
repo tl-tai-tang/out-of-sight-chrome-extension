@@ -48,6 +48,25 @@
   const normalize = (s) =>
     (s || '').trim().replace(/^@/, '').replace(/\[bot\]$/i, '').replace(/\s+/g, ' ').trim().toLowerCase();
 
+  // Settings line -> [name, graceMs]. An optional trailing duration keeps the
+  // user's recent comments visible: "my-bot 15m" hides only comments older
+  // than 15 minutes. Units: m (minutes), h (hours), d (days). No duration =
+  // always hide.
+  const UNIT_MS = { m: 60e3, h: 3600e3, d: 86400e3 };
+  function parseEntry(line) {
+    const m = (line || '').trim().match(/^(.*?)\s+(\d+)\s*([mhd])$/i);
+    if (!m) return [normalize(line), 0];
+    return [normalize(m[1]), Number(m[2]) * UNIT_MS[m[3].toLowerCase()]];
+  }
+  function parseList(lines) {
+    const map = new Map();
+    for (const line of lines || []) {
+      const [name, grace] = parseEntry(line);
+      if (name) map.set(name, grace);
+    }
+    return map;
+  }
+
   function authorKeys(el) {
     const keys = new Set();
     const add = (v) => { const n = normalize(v); if (n) keys.add(n); };
@@ -75,9 +94,19 @@
     return keys;
   }
 
-  function isBlocked(el, blocked) {
-    for (const k of authorKeys(el)) if (blocked.has(k)) return true;
-    return false;
+  // Grace period (ms) if the author is blocked, otherwise undefined.
+  function blockedGrace(el, blocked) {
+    for (const k of authorKeys(el)) if (blocked.has(k)) return blocked.get(k);
+    return undefined;
+  }
+
+  // Still inside the grace window? Uses the comment's own timestamp; comments
+  // without one are treated as old.
+  function withinGrace(container, grace, now) {
+    if (!grace) return false;
+    const t = container.querySelector('relative-time[datetime], time[datetime]');
+    const posted = t && Date.parse(t.getAttribute('datetime'));
+    return Boolean(posted) && now - posted < grace;
   }
 
   function hide(el, hit) {
@@ -93,20 +122,25 @@
     return null;
   }
 
-  function apply(root, blocked) {
+  // blocked: Map of normalized name -> grace period in ms (see parseList).
+  function apply(root, blocked, now = Date.now()) {
     if (!blocked.size) return;
 
     root.querySelectorAll(AUTHOR_SELECTOR).forEach((a) => {
       if (a.closest(IGNORE_SELECTOR)) return;
-      if (!isBlocked(a, blocked)) return;
+      const grace = blockedGrace(a, blocked);
+      if (grace === undefined) return;
 
       const unit = commentUnit(a);
-      if (unit) { hide(unit, true); return; }
+      if (unit) {
+        if (!withinGrace(unit, grace, now)) hide(unit, true);
+        return;
+      }
 
       // Review header ("X reviewed / approved / requested changes") — hide whole review.
       const item = a.closest('.js-timeline-item');
       if (item && item.querySelector('[id^="pullrequestreview-"], .js-comment, .review-comment')) {
-        hide(item, true);
+        if (!withinGrace(item, grace, now)) hide(item, true);
       }
     });
 
@@ -131,11 +165,11 @@
 
   // Exported for tests (Node). In the browser, run as a content script.
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { apply, reset, normalize, countHidden };
+    module.exports = { apply, reset, normalize, countHidden, parseList };
     return;
   }
 
-  let blocked = new Set();
+  let blocked = new Map();
   let scheduled = false;
 
   let revealed = false;
@@ -171,7 +205,7 @@
   };
 
   const load = (users) => {
-    blocked = new Set((users || []).map(normalize).filter(Boolean));
+    blocked = parseList(users);
     reset(document);
     schedule();
   };
@@ -183,4 +217,6 @@
 
   new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener('turbo:load', schedule);
+  // Re-check periodically so comments get hidden once their grace window ends.
+  setInterval(() => { if ([...blocked.values()].some(Boolean)) schedule(); }, 30e3);
 })();

@@ -8,6 +8,29 @@
 
 <p align="center">Works on both the classic pull request page and GitHub's new pull request overview page.</p>
 
+### Changelog
+
+<details open>
+<summary><sub><b>2026-11-11</b> — Time window per user</sub></summary>
+<sub>
+
+- Add a duration after a name (e.g. `my-bot 15m`): newer comments stay visible, older ones hide automatically.
+
+</sub>
+</details>
+
+<details>
+<summary><sub><b>2026-11-10</b> — Initial release, badge, new PR overview</sub></summary>
+<sub>
+
+- Support GitHub's new pull request overview page.
+- Hidden-count badge: click to show (outlined) or hide hidden comments.
+- Hide bot/app comments and avatars; count one per hidden comment.
+- Logo and README.
+- Initial release: hide GitHub comments and reviews from a list of users.
+
+</sub>
+</details>
 
 ## Installation
 
@@ -37,7 +60,6 @@ Click the `N comments hidden` badge to temporarily show hidden comments. They ar
 
 ### Settings page
 
-Add one username or display name per line, then click **Save**.
+Add one username or display name per line, then click **Save**. Optionally add a time window after a name (e.g. `sonarqubecloud 10m`) to keep that user's comments from the last 10 minutes visible and hide older ones. Units: `m` minutes, `h` hours, `d` days.
 
 ![Settings page](docs/screenshots/settings-page.png)
-
